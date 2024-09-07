@@ -219,7 +219,9 @@ topics = {
 
 # Connect to MQTT
 mqtt_client = mqtt.Client(
-    client_id=f"amcrest2mqtt_{serial_number}", clean_session=False
+    mqtt.CallbackAPIVersion.VERSION2,
+    client_id=f"amcrest2mqtt_{serial_number}",
+    clean_session=False,
 )
 mqtt_client.on_disconnect = on_mqtt_disconnect
 mqtt_client.will_set(topics["status"], payload="offline", qos=mqtt_qos, retain=True)
