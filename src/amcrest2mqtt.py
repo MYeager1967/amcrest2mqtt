@@ -434,7 +434,7 @@ mqtt_publish(
 if storage_poll_interval > 0:
     refresh_storage_sensors()
 
-log("Listening for events...")
+log("Listening for events....")
 
 
 async def main():
