@@ -23,6 +23,13 @@ jobs:
                   version_file: ./VERSION
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: 'Automated Version Bump'
+              id: version-bump
+              uses: 'phips28/gh-action-bump-version@master'
+              with:
+                  tag-prefix: 'v'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Checkout code
               uses: actions/checkout@v4
               with:
