@@ -56,7 +56,7 @@ version: "3"
 services:
     amcrest2mqtt:
         container_name: amcrest2mqtt
-        image: dchesterton/amcrest2mqtt:latest
+        image: myeager1967/amcrest2mqtt:latest
         restart: unless-stopped
         environment:
             AMCREST_HOST: 192.168.0.1
