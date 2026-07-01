@@ -73,7 +73,9 @@ def mqtt_publish(topic, payload, exit_on_error=True, json=False):
         exit_gracefully(msg.rc, skip_mqtt=True)
 
 
-def on_mqtt_disconnect(client, userdata, rc):
+def on_mqtt_disconnect(client, userdata, *args):
+    # In v2, rc is the 2nd item in args (index 1)
+    rc = args[1] if len(args) > 1 else args[0]
     if rc != 0:
         log(f"Unexpected MQTT disconnection", level="ERROR")
         exit_gracefully(rc, skip_mqtt=True)
@@ -90,8 +92,9 @@ def exit_gracefully(rc, skip_mqtt=False):
 
     # Use os._exit instead of sys.exit to ensure an MQTT disconnect event causes the program to exit correctly as they
     # occur on a separate thread
-    os._exit(rc)
-
+    # Handle paho-mqtt v2 ReasonCode object or standard integer
+    exit_code = int(rc.value) if hasattr(rc, 'value') else int(rc)
+    os._exit(exit_code)
 
 def refresh_storage_sensors():
     global camera, topics, storage_poll_interval
